@@ -41,4 +41,4 @@ navigate to `application.properties` file and change *redis port* and *host*: if
 to start web application execute ` uwsgi --ini configs/NginX/uwsgi.ini  --venv=/home/azatmanukyan/PycharmProjects/storage_problem/venv/` command in  terminal
 to start worker application which is responsible vor data ingestion into postgress, execute `celery -A storage_problem worker --loglevel=info  --concurrency=1` command.
 
-at this point you should be able to run application( if i'm not missing anyt)hing
+at this point you should be able to run application( if i'm not missing anything)

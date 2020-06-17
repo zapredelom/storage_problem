@@ -9,19 +9,20 @@ class PromotionService:
     def get(self,id)->Promotion:
 
         current = redis_session.get('current')
-        print('geting data of key:__{}__{}'.format(current.decode('utf-8'),id))
-        raw_data = redis_session.get("__{}__{}".format(current.decode('utf-8'),id))
-        print('got raw data {}'.format(raw_data))
-        if raw_data:
-            raw_data = raw_data.decode('utf-8')
-            raw_data = raw_data.split(',')
-            promotion = Promotion(None,raw_data[0],raw_data[1],raw_data[2])
-            return promotion
-        else:
-            return None
+        if current:
+            raw_data = redis_session.get("__{}__{}".format(current.decode('utf-8'),id))
+            if raw_data:
+                raw_data = raw_data.decode('utf-8')
+                raw_data = raw_data.split(',')
+                promotion = Promotion(None,raw_data[0],raw_data[1],raw_data[2])
+                return promotion
+        return None
     
     def create(self, promotion:Promotion):
-        redis_session.set(promotion.external_id, json.dumps(promotion.to_json()))
+        current = redis_session.get('current')
+        key = '__{}__{}'.format(current.decode('utf-8'),id)
+        value = '{},{},{}'.format(promotion.expiration_date,promotion.price,promotion.expiration_date)
+        redis_session.set(key, value)
         return promotion
     
     def create_multiple(self, promotions:list):
