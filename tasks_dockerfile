@@ -1,0 +1,23 @@
+FROM python:3
+ENV PYTHONUNBUFFERED 1
+RUN mkdir /code
+WORKDIR /code
+RUN apt-get update
+COPY requirements.txt /code/requirements.txt
+COPY . /code/
+COPY tasks_supervisor.conf /code/
+COPY redis_import.sh /
+RUN apt-get update
+RUN apt-get -y install cron
+RUN chmod +x redis_import.sh
+RUN touch  /etc/cron.d/task-cron
+RUN chmod 0644 /etc/cron.d/task-cron
+RUN touch /var/log/cron.log
+RUN mv /code/sample.csv /sample.csv
+RUN cd /code
+RUN . venv/bin/activate  && pip install -r requirements.txt
+RUN pwd;ls
+RUN apt-get install redis-tools -y
+RUN echo "*/5 * * * * /redis_import.sh   >> /var/log/cron.log 2>&1" > /etc/cron.d/task-cron
+RUN crontab /etc/cron.d/task-cron
+CMD ["supervisord","-n", "-c", "/code/tasks_supervisor.conf"]

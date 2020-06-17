@@ -1,0 +1,23 @@
+version: '3.2'
+services:
+  redis:
+    image: redis
+    environment:
+       - bind=0.0.0.0
+  postgress:
+    build:
+      dockerfile: postgress_dockerfile
+      context: ./
+    ports:
+      - 5432:5432
+  applicatin:
+    build:
+      dockerfile: application_dockerfile
+      context: ./
+    ports:
+      - 80:80
+  tasks:
+    build:
+      dockerfile: tasks_dockerfile
+      context: ./
+      
