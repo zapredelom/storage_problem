@@ -17,6 +17,7 @@ just make sure you have docker compose [installed](https://docs.docker.com/compo
 
 serving with *uwsgi*
 make sure you have following packages installed
+
 1. [python3](https://www.python.org/downloads/)
 2. [uwsgi](https://uwsgi-docs.readthedocs.io/en/latest/Install.html)
 3. [django](https://docs.djangoproject.com/en/3.0/topics/install/)
@@ -24,10 +25,11 @@ make sure you have following packages installed
 5. [postgres](https://www.postgresql.org/download/)
 6. [pip](https://pip.pypa.io/en/stable/installing/)
 7. [virtualenv](https://virtualenv.pypa.io/en/latest/installation.html)
-postgress and redis can be used without installing, you can use corresponding containers
+
+postgress and redis can be used without installing, you can use corresponding containers.
 create virtualenv in projects root directory, activate it and run `pip install -r requirements.txt`
 
-after this steps setup postges and make sure that it has *postgres* user with *postgres* password , and *postgres* database
+after this steps, setup postges and make sure that it has *postgres* user with *postgres* password , and *postgres* database
 
 execute ```CREATE TABLE IF NOT EXISTS promotion (
     id SERIAL,
@@ -35,10 +37,12 @@ execute ```CREATE TABLE IF NOT EXISTS promotion (
     price NUMERIC (5,2) NOT NULL,
     expiration_date  VARCHAR(100) NOT NULL 
 );``` command to create table
+
 start redis-server
+
 navigate to `application.properties` file and change *redis port* and *host*: if you started *redis-server* on same machine, set value of *host* to *localhost*
 
-to start web application execute ` uwsgi --ini configs/NginX/uwsgi.ini  --venv=/home/azatmanukyan/PycharmProjects/storage_problem/venv/` command in  terminal
+to start web application execute ` uwsgi --ini configs/NginX/uwsgi.ini  --venv=<project full path>/venv/` command in  terminal
 to start worker application which is responsible vor data ingestion into postgress, execute `celery -A storage_problem worker --loglevel=info  --concurrency=1` command.
 
 at this point you should be able to run application( if i'm not missing anything)
