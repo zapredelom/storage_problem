@@ -15,7 +15,7 @@ just make sure you have docker compose [installed](https://docs.docker.com/compo
 
 #### directly on machine
 
-serving with *uwsgi*
+serving with *uwsgi*:<br>
 make sure you have following packages installed
 
 1. [python3](https://www.python.org/downloads/)
@@ -42,7 +42,7 @@ start redis-server
 
 navigate to `application.properties` file and change *redis port* and *host*: if you started *redis-server* on same machine, set value of *host* to *localhost*
 
-to start web application execute ` uwsgi --ini configs/NginX/uwsgi.ini  --venv=<project full path>/venv/` command in  terminal
+to start web application execute ` uwsgi --ini configs/NginX/uwsgi.ini  --venv=<project full path>/venv/` command in  terminal.<br>
 to start worker application which is responsible vor data ingestion into postgress, execute `celery -A storage_problem worker --loglevel=info  --concurrency=1` command.
 
 at this point you should be able to run application( if i'm not missing anything)
