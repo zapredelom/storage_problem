@@ -10,6 +10,6 @@ RUN cd /code
 RUN pip install -r requirements.txt
 RUN pwd;ls
 RUN apt-get update
-RUN apt-get install uwsgi-plugin-python3 nginx -y
+RUN apt-get install uwsgi-plugin-python3 nginx redis-tools -y
 RUN cp /code/configs/NginX/nginx.conf /etc/nginx/nginx.conf
 CMD ["supervisord","-n", "-c", "/code/supervisor.conf"]
